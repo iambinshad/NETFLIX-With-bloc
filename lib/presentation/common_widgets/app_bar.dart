@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:netflix/core/constant.dart';
 
 class AppBarWidget extends StatelessWidget {
@@ -15,10 +14,10 @@ class AppBarWidget extends StatelessWidget {
         kWidth,
         Text(
           title,
-          style: TextStyle(fontWeight: FontWeight.w900, fontSize: 30),
+          style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 30),
         ),
-        Spacer(),
-        Icon(
+        const Spacer(),
+        const Icon(
           Icons.cast,
           size: 30,
           color: Colors.white,
@@ -27,7 +26,7 @@ class AppBarWidget extends StatelessWidget {
         Container(
           height: 30,
           width: 30,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.blue,
           ),
         ),

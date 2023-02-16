@@ -5,3 +5,6 @@ const kWidth = SizedBox(
 );
 const kWhiteColor = Colors.white;
 const kBlackColor = Colors.black;
+const kHeight = SizedBox(
+  height: 10,
+);

@@ -1,8 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 import 'package:netflix/core/constant.dart';
 
 import '../common_widgets/app_bar.dart';
@@ -23,9 +22,9 @@ class ScreenDownloads extends StatelessWidget {
                   title: 'Downloads',
                 )),
             body: ListView.separated(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 itemBuilder: (context, index) => _widget[index],
-                separatorBuilder: (context, index) => SizedBox(
+                separatorBuilder: (context, index) => const SizedBox(
                       height: 20,
                     ),
                 itemCount: _widget.length)));
