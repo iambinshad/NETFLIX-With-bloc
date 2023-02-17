@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:netflix/presentation/common_widgets/icon_with_text.dart';
+import 'package:netflix/presentation/new_and_hot/widget/everyones_watching.dart';
+import 'package:netflix/presentation/new_and_hot/widget/video_widget.dart';
 
 import '../../core/constant.dart';
 import 'widget/coming_soon.dart';
@@ -72,14 +75,12 @@ class ScreenNewAndHot extends StatelessWidget {
   }
 
   Widget _buildEveryOnesWatching() {
-    return ListView(children: [
-      Container(
-        width: double.infinity,
-        height: 100,
-        color: Colors.blue,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (context, index) => const EveryonesWatching(),
       ),
-    ]);
+    );
   }
 }
-
-

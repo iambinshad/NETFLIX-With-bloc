@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:netflix/presentation/new_and_hot/widget/video_widget.dart';
 
 import '../../../core/constant.dart';
 import '../../common_widgets/icon_with_text.dart';
@@ -38,33 +39,8 @@ class ComingSoonWidget extends StatelessWidget {
           height: 500,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Stack(
-              children: [
-                const SizedBox(
-                  width: double.infinity,
-                  height: 200,
-                  child: Image(
-                    image: NetworkImage(
-                      'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/jHKNqz0LjM2dOUv5XDPmcSoYPEW.jpg',
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Positioned(
-                  bottom: 8,
-                  right: 8,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.black.withOpacity(0.5),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.volume_up_rounded,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            VideoWidget(
+              imgIndex: 1,
             ),
             kHeight,
             kHeight,
