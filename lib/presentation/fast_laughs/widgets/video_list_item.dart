@@ -26,7 +26,7 @@ class VideoListITem extends StatelessWidget {
                   backgroundColor: Colors.black.withOpacity(0.3),
                   child: IconButton(
                     onPressed: () {},
-                    icon: Icon(Icons.volume_off_rounded),
+                    icon:const Icon(Icons.volume_off_rounded),
                   ),
                 ),
 
@@ -76,7 +76,7 @@ class VideoActionWidget extends StatelessWidget {
           ),
           Text(
             title,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+            style:const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
           ),
         ],
       ),

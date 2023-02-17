@@ -8,3 +8,7 @@ const kBlackColor = Colors.black;
 const kHeight = SizedBox(
   height: 10,
 );
+
+//Borderradius
+BorderRadius kborderradius = BorderRadius.circular(20);
+BorderRadius kborderradius30 = BorderRadius.circular(34);
