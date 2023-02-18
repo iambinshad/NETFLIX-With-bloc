@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import '../../core/constant.dart';
 
 class IconWithText extends StatelessWidget {
-  const IconWithText({Key? key, required this.icon, required this.text,this.iconSize=20,this.textSize=18})
+  const IconWithText(
+      {Key? key,
+      required this.icon,
+      required this.text,
+      this.iconSize = 20,
+      this.textSize = 18})
       : super(key: key);
   final IconData icon;
   final String text;
@@ -20,7 +25,7 @@ class IconWithText extends StatelessWidget {
         ),
         Text(
           text,
-          style:  TextStyle(
+          style: TextStyle(
             fontSize: textSize,
             color: kWhiteColor,
           ),

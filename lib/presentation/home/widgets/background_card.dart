@@ -35,8 +35,6 @@ class BackgroundCard extends StatelessWidget {
     );
   }
 
-  
-
   TextButton playButton() {
     return TextButton.icon(
       style:
@@ -58,4 +56,3 @@ class BackgroundCard extends StatelessWidget {
     );
   }
 }
-

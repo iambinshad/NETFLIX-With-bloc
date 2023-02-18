@@ -15,7 +15,7 @@ class VideoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-         SizedBox(
+        SizedBox(
           width: double.infinity,
           height: 200,
           child: Image(

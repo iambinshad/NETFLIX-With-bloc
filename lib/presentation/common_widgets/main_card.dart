@@ -13,7 +13,7 @@ class MainCard extends StatelessWidget {
       width: 150,
       height: 230,
       decoration: BoxDecoration(
-          borderRadius:kborderradius,
+          borderRadius: kborderradius,
           image: const DecorationImage(
               image: NetworkImage(
                   'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/kuf6dutpsT0vSVehic3EZIqkOBt.jpg'))),

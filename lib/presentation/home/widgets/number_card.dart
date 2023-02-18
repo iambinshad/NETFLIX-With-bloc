@@ -34,7 +34,7 @@ class NumberCard extends StatelessWidget {
           bottom: -23,
           child: BorderedText(
             strokeWidth: 4.0,
-            strokeColor:const Color.fromARGB(255, 208, 205, 205),
+            strokeColor: const Color.fromARGB(255, 208, 205, 205),
             child: Text("$indexAddedOne",
                 style: const TextStyle(
                     fontSize: 130,

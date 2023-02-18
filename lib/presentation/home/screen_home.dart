@@ -55,7 +55,7 @@ class ScreenHome extends StatelessWidget {
                                 Row(
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(top: 4),
+                                      padding: const EdgeInsets.only(top: 2),
                                       child: Image.network(
                                         'https://assets.stickpng.com/thumbs/629764e87ec76b82fb21fce6.png',
                                         width: 50,

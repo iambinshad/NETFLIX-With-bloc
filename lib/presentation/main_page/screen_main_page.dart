@@ -20,7 +20,6 @@ class ScreenMainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       body: ValueListenableBuilder(
         valueListenable: indexChangeNotifier,
         builder: (context, index, _) {

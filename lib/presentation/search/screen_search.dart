@@ -28,7 +28,7 @@ class ScreenSearch extends StatelessWidget {
               ),
             ),
             // Expanded(child: const SearchIdleWidget()),
-           const Expanded(child:  SearchResultWidget()),
+            const Expanded(child: SearchResultWidget()),
           ],
         ),
       )),
