@@ -1,9 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:netflix/application/hot_and_new/hot_and_new_bloc.dart';
-import 'package:netflix/presentation/common_widgets/icon_with_text.dart';
 import 'package:netflix/presentation/new_and_hot/widget/everyones_watching.dart';
-import 'package:netflix/presentation/new_and_hot/widget/video_widget.dart';
 
 import '../../core/constant.dart';
 import 'widget/coming_soon.dart';
@@ -43,18 +44,22 @@ class ScreenNewAndHot extends StatelessWidget {
               kWidth
             ],
             bottom: TabBar(
+                automaticIndicatorColorAdjustment: true,
                 isScrollable: true,
                 unselectedLabelColor: kWhiteColor,
                 unselectedLabelStyle:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                 labelColor: kBlackColor,
                 labelStyle:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                 indicator: BoxDecoration(
                     color: kWhiteColor, borderRadius: kborderradius30),
                 tabs: const [
-                  Tab(
-                    text: '🍿 Coming Soon     ',
+                  Padding(
+                    padding: EdgeInsets.all(0),
+                    child: Tab(
+                      text: '🍿 Coming Soon     ',
+                    ),
                   ),
                   Tab(
                     text: "👀 Everyone's Watching  ",
@@ -62,28 +67,55 @@ class ScreenNewAndHot extends StatelessWidget {
                 ]),
           ),
         ),
-        body: TabBarView(children: [
-          const ComingSoonList(key: Key('coming_soon')),
-          _buildEveryOnesWatching(),
+        body: const TabBarView(children: [
+          ComingSoonList(key: Key('coming_soon')),
+          EveryOnesWatchingList(
+            key: Key('EveryOnesWatching'),
+          )
         ]),
       ),
     );
   }
+}
 
-  // Widget _buildComingSoon() {
-  //   return ListView.builder(
-  //       itemCount: 10,
-  //       itemBuilder: (context, index) => const ComingSoonWidget());
-  // }
+class EveryOnesWatchingList extends StatelessWidget {
+  const EveryOnesWatchingList({super.key});
 
-  Widget _buildEveryOnesWatching() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (context, index) => SizedBox(),
-        // const EveryonesWatching(),
-      ),
+  @override
+  Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      return BlocProvider.of<HotAndNewBloc>(context)
+          .add(const LoadDataInEveryOnesWatching());
+    });
+    return BlocBuilder<HotAndNewBloc, HotAndNewState>(
+      builder: (context, state) {
+        if (state.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+            ),
+          );
+        } else if (state.hasError) {
+          return const Center(child: Text('Error while getting data'));
+        } else if (state.everyOnesWatchingList.isEmpty) {
+          return const Center(child: Text("EveryOne's Watching list is empty"));
+        } else {
+          return ListView.builder(
+              itemCount: state.everyOnesWatchingList.length,
+              itemBuilder: (context, index) {
+                final movie = state.everyOnesWatchingList[index];
+                if (movie.id == null) {
+                  return const SizedBox();
+                }
+
+                return EveryonesWatching(
+                  posterPath: '$imageAppendUrl${movie.backdropPath}',
+                  movieName: movie.name ?? 'No Title',
+                  description: movie.overview ?? 'No discription',
+                );
+              });
+        }
+      },
     );
   }
 }
@@ -93,6 +125,10 @@ class ComingSoonList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      return BlocProvider.of<HotAndNewBloc>(context)
+          .add(const LoadDataInComingSoon());
+    });
     return BlocBuilder<HotAndNewBloc, HotAndNewState>(
       builder: (context, state) {
         if (state.isLoading) {
@@ -113,13 +149,30 @@ class ComingSoonList extends StatelessWidget {
                 if (movie.id == null) {
                   return const SizedBox();
                 }
+                String month = '';
+                String date = '';
+
+                try {
+                  final _data = DateTime.tryParse(movie.releaseDate!);
+                  final formattedDate =
+                      DateFormat.yMMMMd('en_US').format(_data!);
+                  month = formattedDate
+                      .split('  ')
+                      .first
+                      .substring(0, 3)
+                      .toUpperCase();
+                  date = movie.releaseDate!.split('-')[1];
+                } catch (_) {
+                  month = '';
+                  date = '';
+                }
 
                 return ComingSoonWidget(
                   id: movie.id.toString(),
-                  month: 'March',
-                  day: '22',
-                  posterPath: '$imageAppendUrl${movie.posterPath}',
-                  movieName: movie.originalTitle ?? 'No Title',
+                  month: month,
+                  day: date,
+                  posterPath: '$imageAppendUrl${movie.backdropPath}',
+                  movieName: movie.title ?? 'No Title',
                   description: movie.overview ?? 'No discription',
                 );
               });

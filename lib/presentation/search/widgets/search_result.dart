@@ -55,7 +55,7 @@ class MainCard extends StatelessWidget {
         imageUrl,
         fit: BoxFit.cover,
         errorBuilder: (context, error, stackTrace) =>
-            Center(child: CircularProgressIndicator()),
+           const Center(child: CircularProgressIndicator()),
       ),
     );
   }

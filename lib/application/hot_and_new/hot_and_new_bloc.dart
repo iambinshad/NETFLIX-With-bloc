@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -29,6 +31,7 @@ class HotAndNewBloc extends Bloc<HotAndNewEvent, HotAndNewState> {
       //get data from remote
       final _result = await _hotAndNewService.getHotAndNewMovieData();
       //data to state
+      log(_result.toString());
       final newState = _result.fold((MainFailure failure) {
         return HotAndNewState(
             comingSoonList: [],
@@ -38,13 +41,42 @@ class HotAndNewBloc extends Bloc<HotAndNewEvent, HotAndNewState> {
       }, (HotAndNewRes resp) {
         return HotAndNewState(
             comingSoonList: resp.results,
-            everyOnesWatchingList: [],
+            everyOnesWatchingList: state.everyOnesWatchingList,
             isLoading: false,
-            hasError: true);
+            hasError: false);
       });
       emit(newState);
     });
     //get and new tv data
-    on<LoadDataInEveryOnesWatching>((event, emit) {});
+    on<LoadDataInEveryOnesWatching>((event, emit) async {
+      //send loading to Ui
+      emit(
+        HotAndNewState(
+          comingSoonList: [],
+          everyOnesWatchingList: [],
+          isLoading: true,
+          hasError: false,
+        ),
+      );
+
+      //get data from remote
+      final _result = await _hotAndNewService.getHotAndNewTvData();
+      //data to state
+      log(_result.toString());
+      final newState = _result.fold((MainFailure failure) {
+        return HotAndNewState(
+            comingSoonList: [],
+            everyOnesWatchingList: [],
+            isLoading: false,
+            hasError: true);
+      }, (HotAndNewRes resp) {
+        return HotAndNewState(
+            comingSoonList: state.comingSoonList,
+            everyOnesWatchingList: resp.results,
+            isLoading: false,
+            hasError: false);
+      });
+      emit(newState);
+    });
   }
 }

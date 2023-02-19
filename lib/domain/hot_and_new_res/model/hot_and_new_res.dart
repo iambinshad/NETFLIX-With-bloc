@@ -1,22 +1,18 @@
 import 'package:json_annotation/json_annotation.dart';
 
-
-
 part 'hot_and_new_res.g.dart';
 
 @JsonSerializable()
 class HotAndNewRes {
-  @JsonKey(name:'page')
+  @JsonKey(name: 'page')
   int? page;
- 
-  @JsonKey(name:'results')
+
+  @JsonKey(name: 'results')
   List<HotAndNewData> results;
- 
 
   HotAndNewRes({
     this.page,
-    this.results=const [],
-    
+    this.results = const [],
   });
 
   factory HotAndNewRes.fromJson(Map<String, dynamic> json) {
@@ -28,34 +24,34 @@ class HotAndNewRes {
 
 @JsonSerializable()
 class HotAndNewData {
- 
   @JsonKey(name: 'backdrop_path')
   String? backdropPath;
 
-  @JsonKey(name:'id')
+  @JsonKey(name: 'id')
   int? id;
-  
+
+  @JsonKey(name: 'name')
+  String? name;
+
   @JsonKey(name: 'original_language')
   String? originalLanguage;
 
   @JsonKey(name: 'original_title')
   String? originalTitle;
 
-@JsonKey(name:'overview')
+  @JsonKey(name: 'overview')
   String? overview;
-  
+
   @JsonKey(name: 'poster_path')
   String? posterPath;
 
   @JsonKey(name: 'release_date')
   String? releaseDate;
 
-@JsonKey(name:'title')
+  @JsonKey(name: 'title')
   String? title;
-  
 
   HotAndNewData({
-   
     this.backdropPath,
     this.id,
     this.originalLanguage,
@@ -64,7 +60,6 @@ class HotAndNewData {
     this.posterPath,
     this.releaseDate,
     this.title,
-    
   });
 
   factory HotAndNewData.fromJson(Map<String, dynamic> json) {
