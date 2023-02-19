@@ -5,6 +5,9 @@ import 'package:netflix/application/downloads/downloads_bloc.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/presentation/main_page/screen_main_page.dart';
 
+import 'application/fast_laugh/fastlaugh_bloc.dart';
+import 'application/hot_and_new/hot_and_new_bloc.dart';
+import 'application/search/search_bloc.dart';
 import 'domain/core/di/injectable.dart';
 
 Future<void> main() async {
@@ -20,7 +23,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (ctx) => getIt<DownloadsBloc>())],
+      providers: [
+        BlocProvider(create: (ctx) => getIt<DownloadsBloc>()),
+        BlocProvider(create: (ctx) => getIt<SearchBloc>()),
+        BlocProvider(create: (ctx) => getIt<FastlaughBloc>()),
+        BlocProvider(create: (ctx) => getIt<HotAndNewBloc>()),
+
+      ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(

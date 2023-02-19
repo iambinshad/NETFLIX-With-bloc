@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:netflix/core/constant.dart';
 
 part 'search_response.g.dart';
 
@@ -7,7 +8,7 @@ class SearchResponse {
   @JsonKey(name: 'results')
   List<SearchResultData> results;
 
-  SearchResponse({this.results = const[]});
+  SearchResponse({this.results = const []});
 
   factory SearchResponse.fromJson(Map<String, dynamic> json) {
     return _$SearchResponseFromJson(json);
@@ -26,6 +27,8 @@ class SearchResultData {
 
   @JsonKey(name: 'poster_path')
   String? posterPath;
+
+  String get posterImageUrl => '$imageAppendUrl$posterPath';
 
   SearchResultData({
     this.id,

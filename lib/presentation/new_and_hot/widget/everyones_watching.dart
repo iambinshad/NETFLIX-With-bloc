@@ -5,8 +5,11 @@ import '../../../core/constant.dart';
 import '../../common_widgets/icon_with_text.dart';
 
 class EveryonesWatching extends StatelessWidget {
+   final String posterPath;
+  final String movieName;
+  final String description;
   const EveryonesWatching({
-    Key? key,
+    Key? key, required this.posterPath, required this.movieName, required this.description,
   }) : super(key: key);
 
   @override

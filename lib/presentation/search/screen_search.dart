@@ -1,14 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix/presentation/search/widgets/search_idle.dart';
 
 import 'package:netflix/presentation/search/widgets/search_result.dart';
 
-class ScreenSearch extends StatelessWidget {
-  const ScreenSearch({super.key});
+import '../../application/search/search_bloc.dart';
+import '../../domain/core/debon/debounce_class.dart';
 
+class ScreenSearch extends StatelessWidget {
+  ScreenSearch({super.key});
+
+  final _debouncer = Debouncer(milliseconds: 1 * 2000);
+  GlobalKey<FormState> myFormKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        BlocProvider.of<SearchBloc>(context)
+            .add(const SearchEvent.initialize());
+      },
+    );
     return Scaffold(
+      key: myFormKey,
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(11.0),
@@ -26,9 +40,25 @@ class ScreenSearch extends StatelessWidget {
                 CupertinoIcons.xmark_circle_fill,
                 color: Colors.grey,
               ),
+              onChanged: (value) {
+                if (value.isEmpty) {
+                  return;
+                }
+                _debouncer.run(() {
+                  BlocProvider.of<SearchBloc>(context)
+                      .add(SearchEvent.searchMovie(movieQuery: value));
+                });
+              },
             ),
-            // Expanded(child: const SearchIdleWidget()),
-            const Expanded(child: SearchResultWidget()),
+            Expanded(child: BlocBuilder<SearchBloc, SearchState>(
+              builder: (context, state) {
+                if (state.searchResultList.isEmpty) {
+                  return const SearchIdleWidget();
+                } else {
+                  return const SearchResultWidget();
+                }
+              },
+            )),
           ],
         ),
       )),
