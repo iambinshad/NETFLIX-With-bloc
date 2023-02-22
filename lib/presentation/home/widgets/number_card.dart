@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import '../../../core/constant.dart';
 
 class NumberCard extends StatelessWidget {
-  const NumberCard({super.key, required this.index});
+  const NumberCard({super.key, required this.index, required this.imageUrl});
   final int index;
+  final String imageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +22,10 @@ class NumberCard extends StatelessWidget {
             Container(
               width: 150,
               height: 230,
+              child: Image.network(imageUrl),
               decoration: BoxDecoration(
                   borderRadius: kborderradius,
-                  image: const DecorationImage(
-                      image: NetworkImage(
-                          'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/cCTmZ93aBZ1FwHntiDpa2Lj92zs.jpg'))),
+                  ),
             ),
           ],
         ),

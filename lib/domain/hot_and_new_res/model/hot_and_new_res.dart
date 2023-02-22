@@ -30,6 +30,7 @@ class HotAndNewData {
   @JsonKey(name: 'id')
   int? id;
 
+// in case of tv , use name instead of original_title
   @JsonKey(name: 'name')
   String? name;
 

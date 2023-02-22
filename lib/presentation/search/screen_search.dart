@@ -11,7 +11,7 @@ import '../../domain/core/debon/debounce_class.dart';
 class ScreenSearch extends StatelessWidget {
   ScreenSearch({super.key});
 
-  final _debouncer = Debouncer(milliseconds: 1 * 2000);
+  final _debouncer = Debouncer(milliseconds: 1 * 1000);
   GlobalKey<FormState> myFormKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,8 @@ import '../../../core/constant.dart';
 import '../../common_widgets/icon_with_text.dart';
 
 class BackgroundCard extends StatelessWidget {
-  const BackgroundCard({super.key});
+  const BackgroundCard({super.key, required this.bgUrl});
+  final List<String> bgUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +14,10 @@ class BackgroundCard extends StatelessWidget {
         Container(
           width: double.infinity,
           height: 600,
-          decoration: const BoxDecoration(
+          decoration:  BoxDecoration(
               image: DecorationImage(
                   image: NetworkImage(
-                      'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/or06FN3Dka5tukK1e9sl16pB3iy.jpg'))),
+                      bgUrl[0]))),
         ),
         Positioned(
           bottom: 0,

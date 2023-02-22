@@ -12,6 +12,6 @@ class Debouncer {
 
   run(VoidCallback action) {
     _timer?.cancel();
-    _timer = Timer(Duration(milliseconds: 500), action);
+    _timer = Timer(const Duration(milliseconds: 500), action);
   }
 }

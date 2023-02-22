@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class VideoWidget extends StatelessWidget {
-   String url;
+  String url;
   VideoWidget(
-     this.url,
+    this.url,
     Key? key,
   ) : super(key: key);
 
@@ -14,12 +14,17 @@ class VideoWidget extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           height: 200,
-          
-          child: Image(
-            image: NetworkImage(
-              url,
-            ),
-            fit: BoxFit.cover,
+          child: Image.network(
+            url,
+            fit: BoxFit.fill,
+
+            errorBuilder: (context, error, stackTrace) => const Center(
+                child: Icon(
+              Icons.error_outline,
+              color: Colors.red,
+            )),
+            // loadingBuilder: (context, child, loadingProgress) =>
+            //     Center(child: CircularProgressIndicator()),
           ),
         ),
         Positioned(

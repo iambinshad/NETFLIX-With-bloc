@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:netflix/application/home/home_page_bloc.dart';
 import 'package:netflix/presentation/home/widgets/background_card.dart';
 import 'package:netflix/presentation/home/widgets/number_title_card.dart';
 
@@ -9,10 +13,14 @@ import '../common_widgets/main_title_card.dart';
 ValueNotifier<bool> scrollNotifier = ValueNotifier(true);
 
 class ScreenHome extends StatelessWidget {
-  const ScreenHome({super.key});
+  ScreenHome({super.key});
+  int shuffleCount = 1;
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      BlocProvider.of<HomePageBloc>(context).add(const GetHomeScreenData());
+    });
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -31,18 +39,82 @@ class ScreenHome extends StatelessWidget {
                     return true;
                   }),
                   child: Stack(children: [
-                    ListView(
-                      children: const [
-                        BackgroundCard(),
-                        MainTitleCard(title: 'Released in The Past Year '),
-                        MainTitleCard(title: 'Trending Now'),
+                    BlocBuilder<HomePageBloc, HomePageState>(
+                      builder: (context, state) {
+                        if (state.isLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                            ),
+                          );
+                        } else if (state.hasError) {
+                          return const Text('Error while getting data');
+                        }
+                        //released in the past year
 
-                        //seperated
-                        NumberTitleCard(),
+                        final _releasedPastYear =
+                            state.pastYearMovieList.map((m) {
+                          return '$imageAppendUrl${m.posterPath}';
+                        }).toList();
+                        //trending Now
+                        final _trendingNow = state.trendingTvList.map((m) {
+                          return '$imageAppendUrl${m.posterPath}';
+                        }).toList();
+                        // top 10 tv shows in india today
+                        final _topTenTvshow = state.trendingMovieList.map((m) {
+                          return '$imageAppendUrl${m.posterPath}';
+                        }).toList();
+                        //top10Movies
+                        final _top10TvShow = state.trendingTvList.map((t) {
+                          return '$imageAppendUrl${t.posterPath}';
+                        }).toList();
+                        _top10TvShow.shuffle();
+                        // if (shuffleCount <= 1) {
+                        //   _southIndianCinema.shuffle();
+                        //   shuffleCount = shuffleCount + 1;
+                        // }
 
-                        MainTitleCard(title: 'Tense Dramas'),
-                        MainTitleCard(title: 'South Indian Cinema'),
-                      ],
+                        //tensedrama
+                        final _tenseDrama = state.tenseDramasMovieList.map((m) {
+                          return '$imageAppendUrl${m.posterPath}';
+                        }).toList();
+
+                        //south India Cinema
+
+                        final _southIndianCinema =
+                            state.trendingTvList.map((m) {
+                          return '$imageAppendUrl${m.posterPath}';
+                        }).toList();
+
+                        
+
+                        //ListView
+                        return ListView(
+                          children: [
+                            BackgroundCard(
+                              bgUrl: _topTenTvshow,
+                            ),
+                            MainTitleCard(
+                              title: 'Released in The Past Year ',
+                              posterList: _releasedPastYear,
+                            ),
+                            MainTitleCard(
+                                title: 'Trending Now',
+                                posterList: _trendingNow),
+
+                            //seperated
+                            NumberTitleCard(
+                              postersList: _top10TvShow,
+                            ),
+
+                            MainTitleCard(
+                                title: 'Tense Dramas', posterList: _tenseDrama),
+                            MainTitleCard(
+                                title: 'South Indian Cinema',
+                                posterList: _southIndianCinema),
+                          ],
+                        );
+                      },
                     ),
                     scrollNotifier.value
                         ? AnimatedContainer(
